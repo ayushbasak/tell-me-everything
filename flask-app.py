@@ -17,7 +17,8 @@ def home():
         else:
             cursor.execute('insert into data(name,post) values(?,?)',(username,post))
         con.commit()
-        return redirect(url_for('home'))
+        return '<script>console.log("posted");</script>';
+        # return redirect(url_for('home'))
     elif(request.method == 'GET'):
         cursor.execute('select * from data')
         fetchedData = cursor.fetchall()
@@ -29,7 +30,7 @@ def home():
             dictionary['name'] = fetchedData[i][0]
             dictionary['post'] = fetchedData[i][1]
             li.append(dictionary)
-        return render_template("index-min.html",dataset=li,maxlength = 240)
+        return render_template("index.html",dataset=li,maxlength = 240)
     else:
         pass
     con.commit()
@@ -37,7 +38,7 @@ def home():
 
 @app.route('/about')
 def about():
-    return render_template('about-min.html')
+    return render_template('about.html')
 
 if __name__ == '__main__':
-    app.run(host = "0.0.0.0",debug=False)
+    app.run(host = "127.0.0.1",debug=False)
